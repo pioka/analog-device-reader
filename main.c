@@ -25,7 +25,7 @@ uint8_t g_prev_enc_stat[NUM_OF_ENCODER] = {0};
 DIR_ENC g_enc_dir[NUM_OF_ENCODER] = {DIR_NONE};
 // ==============================================
 
-// ======== Functions difination ========
+// ======== Functions definition ========
 // 初期化用関数
 void initialize(void);
 
