@@ -2,7 +2,9 @@
 #define MAIN_H
 
 #include <pic16f1938.h>
+#include "GPIO.h"
 
+// ======== Configuration Bits ========
 //CONFIG1
 #pragma config FOSC = INTOSC    // Oscillator Selection->INTOSC oscillator: I/O function on CLKIN pin
 #pragma config WDTE = OFF    // Watchdog Timer Enable->WDT disabled
@@ -22,22 +24,36 @@
 #pragma config STVREN = ON    // Stack Overflow/Underflow Reset Enable->Stack Overflow or Underflow will cause a Reset
 #pragma config BORV = LO    // Brown-out Reset Voltage Selection->Brown-out Reset Voltage (Vbor), low trip point selected.
 #pragma config LVP = OFF    // Low-Voltage Programming Enable->Low-voltage programming disabled
+// ====================================
 
 
 #define NUM_OF_ENCODER 2
-#define SEND_TRUE 0
-#define SEND_FALSE 1
+
+typedef struct {
+  GPIO_PORT port;
+  uint8_t   pin;
+} IO_MAP;
 
 // エンコーダの入力ピン定義
-#define ENC_0_ASPECT_A PORTAbits.RA0
-#define ENC_0_ASPECT_B PORTAbits.RA1
-#define ENC_1_ASPECT_A PORTAbits.RA2
-#define ENC_1_ASPECT_B PORTAbits.RA3
+const IO_MAP ENC_INPUT_A[NUM_OF_ENCODER] = {
+  {GPIO_PORTA, 0},
+  {GPIO_PORTA, 2},
+};
+
+const IO_MAP ENC_INPUT_B[NUM_OF_ENCODER] = {
+  {GPIO_PORTA, 1},
+  {GPIO_PORTA, 3},
+};
 
 // 回転方向の出力先ピン定義
-#define ENC_0_CW_OUTPUT  LATCbits.LATC0
-#define ENC_0_CCW_OUTPUT LATCbits.LATC1
-#define ENC_1_CW_OUTPUT  LATCbits.LATC2
-#define ENC_1_CCW_OUTPUT LATCbits.LATC3
+const IO_MAP ENC_OUT_CW[NUM_OF_ENCODER] = {
+  {GPIO_PORTC, 0},
+  {GPIO_PORTC, 2},
+};
+
+const IO_MAP ENC_OUT_CCW[NUM_OF_ENCODER] = {
+  {GPIO_PORTC, 1},
+  {GPIO_PORTC, 3},
+};
 
 #endif
